@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Customer {
+public abstract class Customer implements ICustomer{
     private String name;
     private String email;
     private List<Account> accounts;
