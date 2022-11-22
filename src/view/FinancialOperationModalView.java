@@ -10,23 +10,27 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import controller.IController;
+import model.Account;
 
-abstract public class FinancialOperationModalView extends JDialog implements IView {
+final public class FinancialOperationModalView extends JDialog implements IView {
 	private static final long serialVersionUID = -5928761689396415117L;
 	
+	private MainFrame parentPage;
 	private IController controller;
+	private Account model;
 	
 	//{{DECLARE_CONTROLS
-	JLabel JLabelAccountNumber = new javax.swing.JLabel();
-	JLabel JLabelAmount = new javax.swing.JLabel();
-	JTextField JTextField_AccountNumber = new javax.swing.JTextField();
-	JButton JButton_OK = new javax.swing.JButton();
-	JButton JButton_Cancel = new javax.swing.JButton();
-	JTextField JTextField_Amount = new javax.swing.JTextField();
+	private JLabel JLabelAccountNumber = new JLabel();
+	private JLabel JLabelAmount = new JLabel();
+	private JTextField JTextField_AccountNumber = new JTextField();
+	private JButton JButton_OK = new JButton();
+	private JButton JButton_Cancel = new JButton();
+	private JTextField JTextField_Amount = new JTextField();
 	//}}
 	
-	public FinancialOperationModalView(MainFrame parent, String operationTitle, String accountLabelTitle, String accountNumber) {
+	public FinancialOperationModalView(MainFrame parent, String operationTitle, String accountLabelTitle) {
 		super(parent);
+		this.parentPage = parent;
 		setTitle(operationTitle);
 		setModal(true);
 		getContentPane().setLayout(null);
@@ -46,7 +50,7 @@ abstract public class FinancialOperationModalView extends JDialog implements IVi
 		JTextField_AccountNumber.setEditable(false);
 		getContentPane().add(JTextField_AccountNumber);
 		JTextField_AccountNumber.setBounds(84,12,144,24);
-		JTextField_AccountNumber.setText(accountNumber);
+		JTextField_AccountNumber.setText(parent.dataListView.getAccountNumberOfTheSelectedItem());
 		
 		getContentPane().add(JTextField_Amount);
 		JTextField_Amount.setBounds(84,48,144,24);
@@ -68,7 +72,7 @@ abstract public class FinancialOperationModalView extends JDialog implements IVi
 		//}}
 	}
 	
-	class SymAction implements ActionListener {
+	private class SymAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			Object object = event.getSource();
 			if (object == JButton_OK) JButtonOK_actionPerformed(event);
@@ -76,7 +80,7 @@ abstract public class FinancialOperationModalView extends JDialog implements IVi
 		}
 	}
 
-	void JButtonOK_actionPerformed(ActionEvent event) {
+	private void JButtonOK_actionPerformed(ActionEvent event) {
 		if(this.controller == null) {
 			JOptionPane.showMessageDialog(JButton_OK, "The controller to handle this request was not set!", "Warning: null controller found", JOptionPane.WARNING_MESSAGE);
 			return;
@@ -85,23 +89,34 @@ abstract public class FinancialOperationModalView extends JDialog implements IVi
         dispose();
 	}
 
-	void JButtonCalcel_actionPerformed(ActionEvent event) {
+	private void JButtonCalcel_actionPerformed(ActionEvent event) {
 		dispose();
 	}
 	
-	public void setController(IController controller) {
+	final public void setController(IController controller) {
 		this.controller = controller;
 	}
 	
-	public String getAmount() {
+	final public String getAmount() {
 		return JTextField_Amount.getText();
 	}
 	
-	public String getAccountNumber() {
+	final public String getAccountNumber() {
 		return JTextField_AccountNumber.getText();
 	}
 	
-	public void update() {
-		
+	final public void setModel(Account model) {
+		this.model = model;
+	}
+
+	@Override public void update() {
+		if(this.model == null) {
+			JOptionPane.showMessageDialog(JButton_OK, "The account model to handle the update request was not set!", "Warning: null model found", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		this.parentPage.dataListView
+		.updateAmountValueForTheSelectedItem(
+				String.valueOf(this.model.getBalance())
+		);
 	}
 }
