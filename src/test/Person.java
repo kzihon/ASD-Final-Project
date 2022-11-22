@@ -1,4 +1,6 @@
-package model;
+package test;
+
+import model.Customer;
 
 import java.time.LocalDate;
 
@@ -20,6 +22,7 @@ public class Person extends Customer {
 
     @Override
     public void sendEmail(String message) {
+        System.out.println(message);
 
     }
 }

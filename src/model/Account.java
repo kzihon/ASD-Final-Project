@@ -36,10 +36,11 @@ public abstract class Account {
 
     public void makeDeposit(double amount, AccountOperation accountOperation){
 
-        this.reduceBalanceForWithdrawal(amount);
+        this.increaseBalanceForDeposit(amount);
         this.accountOperations.add(accountOperation);
         String message= "Dear "+ customer.getName()+ ", you've deposited $"+ amount+ " to your bank account.";
-        this.customer.setEmail(message);
+        this.customer.sendEmail(message);
+
 
 
     }

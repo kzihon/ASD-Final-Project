@@ -1,6 +1,8 @@
-package model;
+package test;
 
-public class Company extends Customer{
+import model.Customer;
+
+public class Company extends Customer {
     private int numberOfEmployees;
 
     public Company(String name, String email, int numberOfEmployees,String street, String city, String state, String zip) {
