@@ -8,22 +8,23 @@ public class ConfigJdbc {
     Connection conn = null;
     private String userName;
     private String password;
-    private String jdbcUrl;
+    private String host;
     private int port;
 
     private String dbName;
 
-    public ConfigJdbc(String userName, String password, String jdbcUrl, int port, String dbName ) throws SQLException {
+    public ConfigJdbc(String userName, String password, String host, int port, String dbName ) throws SQLException {
         this.userName= userName;
         this.password= password;
-        this.jdbcUrl=jdbcUrl;
+        this.host =host;
         this.port = port;
         this.dbName= dbName;
     }
 
     public Connection setConnection() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://" + getJdbcUrl() + ":"
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://" + getHost() + ":"
                     + getPort() + "/" + getDbName() + "?" +
                     "user=" + getUserName() + "&password=" + getPassword());
         } catch (SQLException ex) {
@@ -31,6 +32,8 @@ public class ConfigJdbc {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return conn;
@@ -52,12 +55,12 @@ public class ConfigJdbc {
         this.password = password;
     }
 
-    public String getJdbcUrl() {
-        return jdbcUrl;
+    public String getHost() {
+        return host;
     }
 
-    public void setJdbcUrl(String jdbcUrl) {
-        this.jdbcUrl = jdbcUrl;
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public int getPort() {

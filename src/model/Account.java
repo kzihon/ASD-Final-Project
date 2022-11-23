@@ -1,5 +1,7 @@
 package model;
 
+import rules.IFinancialRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,33 +20,39 @@ public abstract class Account {
         this.accountOperations= new ArrayList<>();
     }
 
-    public void makeWithdrawal(double amount, AccountOperation accountOperation) throws IllegalArgumentException{
-        this.reduceBalanceForWithdrawal(amount);
+    public void makeWithdrawal(double amount, AccountOperation accountOperation, List<IFinancialRule> financialRules) throws IllegalArgumentException{
+        this.reduceBalanceForWithdrawal(amount, financialRules);
         this.accountOperations.add(accountOperation);
-        String message= "Dear "+ customer.getName()+ ", you've withdraw $"+ amount+ " from your bank account.";
-        this.customer.setEmail(message);
-
-
-
+        //String message= "Dear "+ customer.getName()+ ", you've withdraw $"+ amount+ " from your bank account.";
+        //this.customer.setEmail(message);
     }
-    protected void reduceBalanceForWithdrawal(double amount){
-        if(this.balance>=amount){
-            this.balance-=amount;
+
+    protected void reduceBalanceForWithdrawal(double amount, List<IFinancialRule> financialRules){
+        for (IFinancialRule financialRule: financialRules){
+            if(financialRule.apply(this, amount))
+                throw new IllegalArgumentException("Some rules not met for this operation.");
         }
-        else throw new IllegalArgumentException("Low Balance.");
+        this.balance-=amount;
     }
 
-    public void makeDeposit(double amount, AccountOperation accountOperation){
+    public void makeDeposit(double amount, AccountOperation accountOperation,List<IFinancialRule> financialRules){
 
-        this.increaseBalanceForDeposit(amount);
+        this.increaseBalanceForDeposit(amount,financialRules);
         this.accountOperations.add(accountOperation);
         String message= "Dear "+ customer.getName()+ ", you've deposited $"+ amount+ " to your bank account.";
         this.customer.sendEmail(message);
 
-
+    }
+    public void makeOperationWithSendEmail(){
 
     }
-    protected void increaseBalanceForDeposit(double amount){
+
+    protected void increaseBalanceForDeposit(double amount, List<IFinancialRule> financialRules){
+        for (IFinancialRule financialRule: financialRules){
+            if(!financialRule.apply(this, amount))
+                throw new IllegalArgumentException("Some rules not met for this operation.");
+
+        }
         this.balance+=amount;
     }
     public abstract void addInterest();
