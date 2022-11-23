@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 
 final public class CreationalAction extends JButton {
 	private static final long serialVersionUID = 1215265835720157451L;

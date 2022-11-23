@@ -50,7 +50,6 @@ final public class FinancialOperationModalView extends JDialog implements IView 
 		JTextField_AccountNumber.setEditable(false);
 		getContentPane().add(JTextField_AccountNumber);
 		JTextField_AccountNumber.setBounds(84,12,144,24);
-		JTextField_AccountNumber.setText(parent.dataListView.getAccountNumberOfTheSelectedItem());
 		
 		getContentPane().add(JTextField_Amount);
 		JTextField_Amount.setBounds(84,48,144,24);
@@ -85,8 +84,7 @@ final public class FinancialOperationModalView extends JDialog implements IView 
 			JOptionPane.showMessageDialog(JButton_OK, "The controller to handle this request was not set!", "Warning: null controller found", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-        this.controller.add();
-        dispose();
+        this.controller.add(this);
 	}
 
 	private void JButtonCalcel_actionPerformed(ActionEvent event) {
@@ -96,13 +94,17 @@ final public class FinancialOperationModalView extends JDialog implements IView 
 	final public void setController(IController controller) {
 		this.controller = controller;
 	}
+		
+	final public void init() {
+		JTextField_AccountNumber.setText(this.parentPage.dataListView.getAccountNumberOfTheSelectedItem());
+	}
 	
 	final public String getAmount() {
-		return JTextField_Amount.getText();
+		return JTextField_Amount.getText().trim();
 	}
 	
 	final public String getAccountNumber() {
-		return JTextField_AccountNumber.getText();
+		return JTextField_AccountNumber.getText().trim();
 	}
 	
 	final public void setModel(Account model) {

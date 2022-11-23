@@ -55,8 +55,11 @@ abstract public class CreationalOperationModalView extends JDialog implements IV
 		int positionParameter = this.radioTypeMediator.getNumberOfColleagues();
 		
 		getContentPane().add(radioTypeAccount);		
-		radioTypeAccount.setBounds(36, 12 * positionParameter, 84, 24);
-		if(positionParameter == 1) radioTypeAccount.setSelected(true);
+		
+		if(positionParameter == 1) {
+			radioTypeAccount.setSelected(true);
+			radioTypeAccount.setBounds(36, 12, 84, 24);
+		} else radioTypeAccount.setBounds(36, 12 + (12 * positionParameter), 84, 24);
 	}
 	
 	private class SymAction implements ActionListener {
@@ -80,8 +83,7 @@ abstract public class CreationalOperationModalView extends JDialog implements IV
 			JOptionPane.showMessageDialog(JButton_OK, "The controller to handle this request was not set!", "Warning: null controller found", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		this.controller.add();
-        dispose();
+		this.controller.add(this);
 	}
 
 	private void JButtonCalcel_actionPerformed(ActionEvent event) {

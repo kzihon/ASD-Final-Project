@@ -3,6 +3,9 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.IColleague;
+import interfaces.IMediator;
+
 final public class RadioButtonMediator implements IMediator {
 	List<RadioButtonTypeAccount> colleagues;
 	
@@ -24,6 +27,7 @@ final public class RadioButtonMediator implements IMediator {
 	@Override public void addColleague(IColleague colleague) {
 		if(!(colleague instanceof RadioButtonTypeAccount)) return;
 		this.colleagues.add((RadioButtonTypeAccount)colleague);
+		colleague.setMediator(this);
 	}
 
 	@Override public void informOtherColleagues(IColleague colleague) {

@@ -3,14 +3,17 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
+import interfaces.IColleague;
+import interfaces.IMediator;
+
 final public class RadioButtonTypeAccount extends JRadioButton implements IView, IColleague {
 	private static final long serialVersionUID = 6370523961137812426L;
 	private IMediator mediator;
 	
-	public RadioButtonTypeAccount(String text, String action) {
+	public RadioButtonTypeAccount(String text) {
 		super();
 		setText(text);
-		setActionCommand(action);
+		setActionCommand(text);
 		addMouseListener(new SymMouse());
 	}
 	

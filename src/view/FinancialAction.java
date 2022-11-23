@@ -32,6 +32,7 @@ public class FinancialAction extends JButton {
 			JOptionPane.showMessageDialog(this, "You need to select an item for this action!", "Warning: null item selected found", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+		this.modalView.init();
 		this.modalView.setBounds(430, 50, 300, 170);
 		this.modalView.setVisible(true);
 	}

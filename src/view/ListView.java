@@ -30,7 +30,7 @@ abstract public class ListView extends JTable implements IView {
 		this.indexOfAccountNumberColumn = indexOfAccountNumberColumn;
 	}
 
-	final public void addColumn(String columnTitle) {
+	final protected void addColumn(String columnTitle) {
 		this.tableModel.addColumn(columnTitle);
 	}
 	
@@ -60,7 +60,7 @@ abstract public class ListView extends JTable implements IView {
 		this.tableModel.setValueAt(newAmount, positionOfSelectedItem, indexOfAmountColumn);
 	}
 	
-	final public void addAnItem(Object ...valuesForColumns) {
+	final protected void addAnItem(Object ...valuesForColumns) {
 		Object[] rowData = new Object[valuesForColumns.length];
 		int index = 0;
 		for(Object value: valuesForColumns) rowData[index++] = value;

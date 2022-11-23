@@ -21,6 +21,7 @@ public class MainFrame extends JFrame implements IView {
 	
 	private int numberOfCreationalAction = 0;
 	private int numberOfFinancialAction = 0;
+	private boolean interestActionAdded = false;
 	private JButton JButton_Exit = new JButton();
 	
 	public MainFrame(String pageTitle) {
@@ -52,6 +53,7 @@ public class MainFrame extends JFrame implements IView {
 	public void setListView(ListView listView) {
 		this.scrollContainer.getViewport().add(listView);
         listView.setBounds(0, 0, 420, 0);
+        this.dataListView = listView;
 	}
 	
 	public void addFinancialAction(FinancialAction action) {
@@ -59,6 +61,14 @@ public class MainFrame extends JFrame implements IView {
 		this.pageContainer.add(action);
 		action.setBounds(468, 100 + (this.numberOfFinancialAction * 50), 90, 35);
 		this.numberOfFinancialAction++;
+	}
+	
+	public void addInterestAction(InterestAction action) {
+		if(this.interestActionAdded) return;
+		
+		this.pageContainer.add(action);
+		action.setBounds(448,20,106,33);
+		this.interestActionAdded = true;
 	}
 	
 	public void addCreationalAction(CreationalAction action) {
