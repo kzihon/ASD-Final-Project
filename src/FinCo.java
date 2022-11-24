@@ -24,7 +24,7 @@ public class Finco extends Company {
 	static public Finco getInstance() {
 		if(instance != null) return instance;
 		
-		config = ConfigReader.readFincoSettings(ConfigFile);
+		config = ConfigReader.readFincoSettings(CONFIG_FILE);
 		if(config == null) {
 			System.out.println("Something goes wrong with the settings file. Please check on it!");
 			return null;
@@ -35,7 +35,7 @@ public class Finco extends Company {
 		return instance;
 	}
 
-	static private String ConfigFile = System.getProperty("user.dir")
+	static final private String CONFIG_FILE = System.getProperty("user.dir")
 			+ "/src/resources/config.xml";
 	
 	private String phoneNumber, legalName, establishedYear, type;

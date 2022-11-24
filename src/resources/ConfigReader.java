@@ -27,7 +27,7 @@ public class ConfigReader {
 		    Document doc = db.parse(file);
 		    doc.getDocumentElement().normalize();
 		    
-		    NodeList nodeList = doc.getElementsByTagName("database");
+		    NodeList nodeList = doc.getElementsByTagName("finco");
 		    // nodeList is not iterable, so we are using for loop
 		    
 		    for (int itr = 0; itr < nodeList.getLength(); itr++) {
