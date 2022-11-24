@@ -1,13 +1,13 @@
-package app;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import model.AccountFactory;
-import model.CustomerFactory;
-import model.DefaultDepositEntry;
-import model.DefaultSimpleAccountFactory;
-import model.Entry;
-import model.Person;
+import javax.swing.UIManager;
+
+import controller.DefaultPersonalCheckingAccountController;
+import model.Company;
+import resources.ConfigReader;
 import view.AccountListView;
-import view.CreateCompanyAccountModal;
 import view.CreatePersonalAccountModal;
 import view.CreationalAction;
 import view.FinancialAction;
@@ -16,24 +16,47 @@ import view.InterestAction;
 import view.MainFrame;
 import view.RadioButtonTypeAccount;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+public class Finco extends Company {
+	
+	static private Finco instance;
+	static private Map<String, String> config = new HashMap<String, String>();
+	
+	static public Finco getInstance() {
+		if(instance != null) return instance;
+		
+		config = ConfigReader.readFincoSettings(ConfigFile);
+		if(config == null) {
+			System.out.println("Something goes wrong with the settings file. Please check on it!");
+			return null;
+		}
+		instance = new Finco(config.get("name"), config.get("email"), 0, config.get("street"),
+				config.get("city"), config.get("state"), config.get("zip"), config.get("phonenumber"),
+				config.get("legalname"), config.get("establishedyear"), config.get("type"));
+		return instance;
+	}
 
-import javax.swing.UIManager;
-
-import controller.DefaultPersonalCheckingAccountController;
-import interfaces.IAccount;
-
-public class App {
-    public static void main(String[] args) {
-    	runSwingMode();
-    }
-
-    public static void init(){
-    }
-    
-    static void runSwingMode() {
-    	try {
+	static private String ConfigFile = System.getProperty("user.dir")
+			+ "/src/resources/config.xml";
+	
+	private String phoneNumber, legalName, establishedYear, type;
+	
+	protected Finco(String name, String email, int numberOfEmployees, String street, String city, String state,
+			String zip, String phoneNumber, String legalName, String establishedYear, String type) {
+		
+		super(name, email, numberOfEmployees, street, city, state, zip);
+		this.phoneNumber = phoneNumber;
+		this.legalName = legalName;
+		this.establishedYear = establishedYear;
+		this.type = type;
+	}
+	
+	
+	static public void main(String[] arg) {
+		Finco.getInstance().run();
+	}
+	
+	public void run() {
+		try {
 		    // Add the following code if you want the Look and Feel
 		    // to be set to the Look and Feel of the native system.
 		    
@@ -99,17 +122,5 @@ public class App {
 			//Ensure the application exits with an error condition.
 			System.exit(1);
 		}
-    }
-    
-    static void runConsoleMode() {
-    	CustomerFactory customerFactory = new CustomerFactory();
-    	Person person = (Person)customerFactory.createPerson("Jack", LocalDate.now(), "Jack@gmail.com", "1000 N","Fairfield",
-                "IA", "52557");
-    	
-    	AccountFactory factory = DefaultSimpleAccountFactory.getCheckingAccountFactory();
-		IAccount checkingAccount = factory.createAccount(person, "123445");
-
-        Entry deposit = new DefaultDepositEntry(200,LocalDate.now());
-        checkingAccount.makeDeposit(200, deposit);
-    }
+	}
 }
