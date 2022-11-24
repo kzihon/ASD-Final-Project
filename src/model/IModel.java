@@ -1,8 +1,10 @@
 package model;
 
+import view.IView;
+
 public interface IModel {
-    public void attachView();
-    public void detachView();
+    public void attachView(IView view);
+    public void detachView(IView view);
     public void notifyViews();
     public void save();
     public void delete();

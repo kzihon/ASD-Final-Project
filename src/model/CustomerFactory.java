@@ -1,11 +1,16 @@
 package model;
 
+import java.time.LocalDate;
+
+import interfaces.ICompany;
+import interfaces.IPerson;
+
 /**
  *
  * Factory to create a customer
  * @author Group 3
  */
-public abstract class CustomerFactory {
+public class CustomerFactory {
 
     /**
      * Concrete customer factory
@@ -16,8 +21,12 @@ public abstract class CustomerFactory {
      * @param city
      * @return
      */
-    public abstract   Customer createCustomer(String name, String street, String city, String state, String zip, String email);
+    public IPerson createPerson(String name, LocalDate birthdate, String street, String city, String state, String zip, String email) {
+    	return new Person(name, email, birthdate, street, city, state, zip);
+    }
 
-
+    public ICompany createCompany(String name, int numberOfEmployees, String street, String city, String state, String zip, String email) {
+    	return new Company(name, email, numberOfEmployees, street, city, state, zip);
+    }
 
 }

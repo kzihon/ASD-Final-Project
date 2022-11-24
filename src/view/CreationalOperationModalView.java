@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import controller.IController;
-import model.Account;
+import interfaces.IAccount;
 
 abstract public class CreationalOperationModalView extends JDialog implements IView {
 	private static final long serialVersionUID = -5669449254130140106L;
@@ -16,7 +16,7 @@ abstract public class CreationalOperationModalView extends JDialog implements IV
 	
 	private MainFrame parentPage;
 	private IController controller;
-	private Account model;
+	private IAccount model;
 	
 	//{{DECLARE_CONTROLS
 	protected JButton JButton_OK = new JButton();
@@ -70,7 +70,7 @@ abstract public class CreationalOperationModalView extends JDialog implements IV
 		}
 	}
 	
-	final public void setModel(Account model) {
+	final public void setModel(IAccount model) {
 		this.model = model;
 	}
 	
@@ -101,6 +101,8 @@ abstract public class CreationalOperationModalView extends JDialog implements IV
 		}
 		
 		this.parentPage.dataListView.addAnItem(this.model);
+		this.refresh();
 	}
-
+	
+	abstract protected void refresh();
 }

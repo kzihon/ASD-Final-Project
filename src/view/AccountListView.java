@@ -1,8 +1,8 @@
 package view;
 
+import interfaces.ICustomer;
 import model.Account;
 import model.Address;
-import model.Customer;
 import model.IModel;
 
 public class AccountListView extends ListView {
@@ -28,7 +28,7 @@ public class AccountListView extends ListView {
 		String typeOfAccount = "Ch";
 		//if(item instanceof Savings) typeOfAccount = "S";
 		
-		Customer customer = item.getCustomer();
+		ICustomer customer = item.getCustomer();
 		String typeOfCustomer = "P";
 		//if(customer instanceof Company) typeOfCustomer = "C";
 			

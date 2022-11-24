@@ -10,14 +10,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import controller.IController;
-import model.Account;
+import interfaces.IAccount;
 
 final public class FinancialOperationModalView extends JDialog implements IView {
 	private static final long serialVersionUID = -5928761689396415117L;
 	
 	private MainFrame parentPage;
 	private IController controller;
-	private Account model;
+	private IAccount model;
 	
 	//{{DECLARE_CONTROLS
 	private JLabel JLabelAccountNumber = new JLabel();
@@ -88,6 +88,7 @@ final public class FinancialOperationModalView extends JDialog implements IView 
 	}
 
 	private void JButtonCalcel_actionPerformed(ActionEvent event) {
+		this.refresh();
 		dispose();
 	}
 	
@@ -107,7 +108,7 @@ final public class FinancialOperationModalView extends JDialog implements IView 
 		return JTextField_AccountNumber.getText().trim();
 	}
 	
-	final public void setModel(Account model) {
+	final public void setModel(IAccount model) {
 		this.model = model;
 	}
 
@@ -120,5 +121,10 @@ final public class FinancialOperationModalView extends JDialog implements IView 
 		.updateAmountValueForTheSelectedItem(
 				String.valueOf(this.model.getBalance())
 		);
+		this.refresh();
+	}
+	
+	final protected void refresh() {
+		JTextField_Amount.setText("");
 	}
 }

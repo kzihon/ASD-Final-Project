@@ -133,4 +133,15 @@ abstract public class CreateAccountModal extends CreationalOperationModalView {
 		return JTextField_EMAIL.getText().trim();
 	}
 	
+	@Override
+	final protected void refresh() {
+		JTextField_NAME.setText("");
+		JTextField_CITY.setText("");
+		JTextField_STATE.setText("");
+		JTextField_STREET.setText("");
+		JTextField_ZIP.setText("");
+		JTextField_EMAIL.setText("");
+		JTextField_ACCOUNTNUMBER.setText("");
+		JTextField_SPECIFIC.setText("");
+	}
 }

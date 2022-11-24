@@ -1,13 +1,15 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Customer {
+import interfaces.IAccount;
+import interfaces.ICustomer;
+
+public abstract class Customer implements ICustomer {
     private String name;
     private String email;
-    private List<Account> accounts;
+    private List<IAccount> accounts;
     private Address address;
 
     protected Customer(String name, String email, String street, String city, String state, String zip) {
@@ -36,7 +38,7 @@ public abstract class Customer {
 
     }
 
-    public List<Account> getAccounts() {
+    public List<IAccount> getAccounts() {
         return accounts;
     }
 
@@ -51,5 +53,6 @@ public abstract class Customer {
     public void setAddress(Address address) {
         this.address = address;
     }
+    
     public  abstract void sendEmail(String message);
 }
