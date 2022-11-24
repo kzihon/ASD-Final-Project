@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Bank {
+public class FinancialCompany {
 
 
     private String name;
@@ -15,16 +15,16 @@ public class Bank {
 
     private Address address;
 
-    private Bank() {
+    private FinancialCompany() {
         this.name="Bank";
         this.legalName="My Bank";
     }
 
-    private static Bank instance  = new Bank();
+    private static FinancialCompany instance  = new FinancialCompany();
 
-    public static Bank getInstance(){
+    public static FinancialCompany getInstance(){
         if(Objects.isNull(instance)){
-            return new Bank();
+            return new FinancialCompany();
         }
         return instance;
     }
@@ -85,7 +85,7 @@ public class Bank {
         this.address = address;
     }
 
-    public static void setInstance(Bank instance) {
-        Bank.instance = instance;
+    public static void setInstance(FinancialCompany instance) {
+        FinancialCompany.instance = instance;
     }
 }

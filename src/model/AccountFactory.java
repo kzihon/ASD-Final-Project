@@ -1,5 +1,5 @@
 package model;
 
 public interface AccountFactory {
-    public Account createAccount(Customer customer);
+    public Account createAccount(String accountNumber, Customer customer);
 }
